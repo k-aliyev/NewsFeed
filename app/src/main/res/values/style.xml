@@ -1,0 +1,9 @@
+<resources>
+    <style name="ErrorTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="HintTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+</resources>

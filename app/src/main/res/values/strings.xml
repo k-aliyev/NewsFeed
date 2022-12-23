@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">NewsFeed</string>
+    <string name="tvSignIn">Sign In</string>
+    <string name="tcSignUp">I don\'t have account</string>
+    <string name="tvSignUp">Sign Up</string>
+    <string name="tvUsername">Username</string>
+    <string name="tvEmail">Email</string>
+    <string name="tvPassword">Password</string>
+    <string name="tvConfirmPassword">Confirm Password</string>
+    <string name="tvInvalidUser">Incorrect username or password</string>
+    <string name="tvInvalidPassword">Please repeat password</string>
+    <string name="tvSpinner">Select Payment Type:</string>
+    <string name="tvSearch">Topics, Sourses, Titles...</string>
+    <string name="no_results_available">No Results Available</string>
+    <string name="text_newspaper">News</string>
+    <string name="text_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings_title">User Settings</string>
+    <string name="save">Save</string>
+    <string name="setting_language" >Select news language:</string>
+    <array name="languages">
+        <item>en</item>
+        <item>ru</item>
+        <item>ar</item>
+    </array>
+</resources>
