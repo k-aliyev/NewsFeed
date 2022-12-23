@@ -101,13 +101,12 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     class CustomGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
-        public void onLongPress(MotionEvent e) {
-            super.onLongPress(e);
+        public boolean onDoubleTap(MotionEvent e) {
             if(!source.getId().isEmpty()) {
-                UserSourceTable.insertUser(dbHelper, new UserSource(Common.user.getId(), source.getId()));
+                UserSourceTable.insertUserSource(dbHelper, new UserSource(Common.user.getId(), source.getId()));
                 Toast.makeText(context, "You are now subscribed to " + source.getName(), Toast.LENGTH_LONG).show();
             }
-
+            return super.onDoubleTap(e);
         }
     }
 }

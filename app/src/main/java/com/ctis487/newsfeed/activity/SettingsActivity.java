@@ -1,14 +1,18 @@
 package com.ctis487.newsfeed.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.ctis487.newsfeed.R;
 import com.ctis487.newsfeed.databinding.ActivityMainBinding;
 import com.ctis487.newsfeed.databinding.ActivitySettingsBinding;
 import com.ctis487.newsfeed.service.ApiService;
@@ -17,6 +21,8 @@ import com.ctis487.newsfeed.service.MyVolleyUsage;
 import com.ctis487.newsfeed.service.UserTable;
 import com.ctis487.newsfeed.util.Common;
 import com.ctis487.newsfeed.util.DatabaseHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class SettingsActivity extends AppCompatActivity {
     DatabaseHelper dbHelper;
@@ -42,17 +48,21 @@ public class SettingsActivity extends AppCompatActivity {
 
                 if(!password.equals(Common.user.getPassword())) {
                     Toast.makeText(SettingsActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
-                }else if(!UserTable.isUsernameAvailable(dbHelper, username)){
+                }else if(!UserTable.isUsernameAvailable(dbHelper, username) && !username.isEmpty()){
                     Toast.makeText(SettingsActivity.this, "This username already exists", Toast.LENGTH_SHORT).show();
                 }
-                else if(!UserTable.isEmailAvailable(dbHelper, email)){
+                else if(!UserTable.isEmailAvailable(dbHelper, email) && !email.isEmpty()){
                     Toast.makeText(SettingsActivity.this, "This email already exists", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    UserTable.updateUser(dbHelper, Common.user.getId(), username, email, password);
-                    finish();
-
+                    if(!username.isEmpty()) {
+                        UserTable.updateUser(dbHelper, Common.user.getId(), username, Common.user.getEmail(), password);
+                    }
+                    if(!email.isEmpty()){
+                        UserTable.updateUser(dbHelper, Common.user.getId(), Common.user.getUsername(), email, password);
+                    }
                     Toast.makeText(SettingsActivity.this, "New settings saved", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });

@@ -11,4 +11,8 @@ public class ApiService {
         return Common.ARTICLES_API + "&pageSize=" + Common.pageSize + "&page=" + Common.page;
 
     }
+
+    public void updateLanguageAPI(){
+        Common.ARTICLES_API = Common.ARTICLES_API_BASE += "&language=" + Common.language;
+    }
 }

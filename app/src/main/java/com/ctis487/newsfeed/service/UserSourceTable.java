@@ -24,7 +24,7 @@ public class UserSourceTable {
         boolean res = db.insert(TABLE_NAME, contentValues);
         return res;
     }
-    public static boolean insertUser(DatabaseHelper db, UserSource userSource) {
+    public static boolean insertUserSource(DatabaseHelper db, UserSource userSource) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(FIELD_USER_ID, userSource.getUserId());
         contentValues.put(FIELD_SOURCE_ID, userSource.getSourceId());

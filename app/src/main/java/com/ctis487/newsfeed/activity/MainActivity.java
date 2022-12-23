@@ -1,5 +1,9 @@
 package com.ctis487.newsfeed.activity;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
@@ -8,6 +12,7 @@ import androidx.loader.content.AsyncTaskLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -76,6 +81,19 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setAdapter(adapter);
 
+        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Common.page = 0;
+                        Common.clearArticles();
+                        apiService.updateLanguageAPI();
+                        myVolley.requestArticles(apiService.nextPage());
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
         binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -101,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     Common.search = binding.editSearch.getText().toString();
                     Common.page = 0;
                     Common.clearArticles();
+
                     myVolley.requestArticles(apiService.nextPage());
                     adapter.notifyDataSetChanged();
 
@@ -119,12 +138,19 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.settings){
                     Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    someActivityResultLauncher.launch(intent);
+                    return true;
+                }else if(item.getItemId() == R.id.favorites){
+                    Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
                     startActivity(intent);
                     return true;
                 }
                 return false;
             }
         });
+
+
+
     }
 
 }
