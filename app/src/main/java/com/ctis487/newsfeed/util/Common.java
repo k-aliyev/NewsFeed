@@ -15,6 +15,7 @@ public class Common {
     public static int pageSize = 10;
     public static ArrayList<Article> articles = new ArrayList<>();
     public static ArrayList<Source> sources = new ArrayList<>();
+    public static ArrayList<String> favSourcesId = new ArrayList<>();
     public static String ARTICLES_API_BASE = "https://newsapi.org/v2/top-headlines?apiKey=7fc409247c5b49208b0d7c4f48c0c82f";
     public static String ARTICLES_API = "https://newsapi.org/v2/top-headlines?apiKey=7fc409247c5b49208b0d7c4f48c0c82f";
     public static String SOURCES_API = "https://newsapi.org/docs/endpoints/sources";

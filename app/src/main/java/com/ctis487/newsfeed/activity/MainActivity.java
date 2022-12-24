@@ -34,6 +34,7 @@ import com.ctis487.newsfeed.databinding.ActivityMainBinding;
 import com.ctis487.newsfeed.service.ApiService;
 import com.ctis487.newsfeed.service.CustomRecyclerViewAdapter;
 import com.ctis487.newsfeed.service.MyVolleyUsage;
+import com.ctis487.newsfeed.service.UserSourceTable;
 import com.ctis487.newsfeed.util.Common;
 import com.ctis487.newsfeed.util.DatabaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -64,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         myVolley = new MyVolleyUsage(this);
         apiService = new ApiService();
+        apiService.updateLanguageAPI();
 
+        Common.favSourcesId = UserSourceTable.getFavoritesId(dbHelper, Common.user.getId());
 
         myVolley.requestArticles(apiService.nextPage());
         myVolley.requestSources(Common.SOURCES_API);
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        adapter = new CustomRecyclerViewAdapter(MainActivity.this, Common.getArticles());
+        adapter = new CustomRecyclerViewAdapter(MainActivity.this, Common.getArticles(), false);
 
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

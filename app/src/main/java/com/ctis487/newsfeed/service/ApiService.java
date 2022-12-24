@@ -13,6 +13,6 @@ public class ApiService {
     }
 
     public void updateLanguageAPI(){
-        Common.ARTICLES_API = Common.ARTICLES_API_BASE += "&language=" + Common.language;
+        Common.ARTICLES_API = Common.ARTICLES_API_BASE + "&language=" + Common.language;
     }
 }

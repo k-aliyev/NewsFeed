@@ -19,6 +19,7 @@
     <string name="settings_title">User Settings</string>
     <string name="save">Save</string>
     <string name="setting_language">Select news language:</string>
+    <string name="tvFavorites">Your Feed</string>
     <array name="languages">
         <item>en</item>
         <item>ru</item>

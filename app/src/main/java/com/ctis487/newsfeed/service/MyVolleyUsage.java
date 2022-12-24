@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MyVolleyUsage {
     RequestQueue queue;
@@ -84,9 +85,14 @@ public class MyVolleyUsage {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray sources = response.getJSONArray("sources");
-                            Common.setSources(new ArrayList<Source>(Arrays.asList(new Gson().fromJson(
+                            ArrayList<Source> allSources = new ArrayList<Source>(Arrays.asList(new Gson().fromJson(
                                     sources.toString(), Source[].class
-                            ))));
+                            )));
+
+                            Common.setSources(new ArrayList<Source>(
+                                    allSources.stream().filter(
+                                            source -> Common.favSourcesId.contains(
+                                                    source.getId())).collect(Collectors.toList())));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

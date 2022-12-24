@@ -2,6 +2,7 @@ package com.ctis487.newsfeed.service;
 
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ctis487.newsfeed.R;
+import com.ctis487.newsfeed.activity.FavoriteActivity;
 import com.ctis487.newsfeed.activity.MainActivity;
 import com.ctis487.newsfeed.entity.Article;
 import com.ctis487.newsfeed.entity.Source;
@@ -35,14 +37,17 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     private Context context;
     private ArrayList<Article> articles;
+    private boolean block = false;
     GestureDetectorCompat gestureDetector;
     CustomGestureListener customGestureListener;
     DatabaseHelper dbHelper;
     Source source = new Source();
 
-    public CustomRecyclerViewAdapter(Context context, ArrayList<Article> values) {
+
+    public CustomRecyclerViewAdapter(Context context, ArrayList<Article> values, boolean block) {
         this.context = context;
         this.articles = values;
+        this.block = block;
 
         customGestureListener = new CustomGestureListener();
         gestureDetector = new GestureDetectorCompat(context, customGestureListener);
@@ -101,12 +106,26 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     class CustomGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            if(!source.getId().isEmpty()) {
-                UserSourceTable.insertUserSource(dbHelper, new UserSource(Common.user.getId(), source.getId()));
-                Toast.makeText(context, "You are now subscribed to " + source.getName(), Toast.LENGTH_LONG).show();
+        public void onLongPress(MotionEvent e) {
+            super.onLongPress(e);
+            if(source.getName() != null && !block) {
+                if(!UserSourceTable.checkIfExists(dbHelper, Common.user.getId(), source.getName())) {
+                    UserSourceTable.insertUserSource(dbHelper, new UserSource(Common.user.getId(), source.getName()));
+                    Common.favSourcesId = UserSourceTable.getFavoritesId(dbHelper, Common.user.getId());
+
+                    Toast.makeText(context, "You are now subscribed to " + source.getName(), Toast.LENGTH_LONG).show();
+                    final MediaPlayer mp = MediaPlayer.create(context, R.raw.success);
+                    mp.start();
+
+                }else{
+                    Toast.makeText(context, "You already subscribed to " + source.getName(), Toast.LENGTH_LONG).show();
+                }
+            }else{
+                //TODO:ether sort out all articles with source id == null or register by source name
+                Toast.makeText(context, "Can't subscribe to this source " + source.getName(), Toast.LENGTH_LONG).show();
             }
-            return super.onDoubleTap(e);
         }
     }
+
+
 }
