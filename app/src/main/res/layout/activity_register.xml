@@ -110,7 +110,7 @@
                 android:layout_marginTop="32dp"
                 android:text="@string/tvSignUp"
                 app:cornerRadius="4dp"
-                app:backgroundTint="@color/colorAccent" />
+                app:backgroundTint="@color/colorButtonNormal" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

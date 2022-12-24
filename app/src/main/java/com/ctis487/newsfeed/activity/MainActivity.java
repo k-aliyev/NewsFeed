@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        binding.bottomNavigation.getMenu().setGroupCheckable(0, false, true);
+
         binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

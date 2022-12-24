@@ -41,12 +41,12 @@ public class RegisterActivity extends AppCompatActivity {
                 String repeat = binding.editConfirmPassword.getText().toString();
 
                 if(!password.equals(repeat)) {
-                    Toast.makeText(RegisterActivity.this, "Password should be the same", Toast.LENGTH_SHORT).show();
+                    showValidation("Password should be the same");
                 }else if(!UserTable.isUsernameAvailable(dbHelper, username)){
-                    Toast.makeText(RegisterActivity.this, "This username already exists", Toast.LENGTH_SHORT).show();
+                    showValidation("This username already exists");
                 }
                 else if(!UserTable.isEmailAvailable(dbHelper, email)){
-                    Toast.makeText(RegisterActivity.this, "This email already exists", Toast.LENGTH_SHORT).show();
+                    showValidation("This email already exists");
                 }
                 else{
                     UserTable.insertUser(dbHelper, username, email, password);
@@ -55,5 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showValidation(String message){
+        binding.tvValidation.setText(message);
+        binding.tvValidation.setVisibility(View.VISIBLE);
     }
 }
